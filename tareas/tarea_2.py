@@ -43,11 +43,10 @@ while True:
             print("Gracias, hasta luego.")
             break
             
-        # Ask if user wants to continue
         bandera = int(input("\n¿Desea continuar? (1 = Sí, 0 = No): "))
         
     elif bandera == 0:
-        # print("Gracias, hasta luego.")
+        print("Gracias, hasta luego.")
         break
 
 
