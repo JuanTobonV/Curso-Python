@@ -7,7 +7,7 @@ booking = {}
 def main():
     while(True):
         print(menu())
-        user_option = int(input("Escoje una opción"))
+        user_option = int(input("Escoje una opción: "))
 
         match user_option:
             case 1:
@@ -28,8 +28,8 @@ def main():
 
 def menu():
     return (
-        "¡Hola! ¿Qué deseas hacer hoy?\n\n"
-        "1. Registrar amigos\n"
+        "¿Qué deseas hacer?\n\n"
+        "1.  Registrar amigos\n"
         "2.  Registrar libros\n"
         "3.  Registrar Prestamos\n"
         "4.  Ver mis amiguitos\n"
@@ -104,5 +104,5 @@ def search_book_by_id(id_book):
     return book        
 
 
-if __name__ == "BookApp":
+if __name__ == "__main__":
     main()
