@@ -6,8 +6,17 @@ booking = {}
 
 def main():
     while(True):
+        print(f"Lista libros: {books}")
+        print("///////////")
+
+        print(f"Lista reservas: {booking}")
+
+
         print(menu())
         user_option = int(input("Escoje una opción: "))
+
+        
+
 
         match user_option:
             case 1:
@@ -54,30 +63,38 @@ def createFriend():
 
 def create_books():
     book = []
+    es_prestado = False
     id_book = int(input("Id libro: "))
     book_name = input("Nombre Libro: ")
     book.append(book_name)
     book_author = input("Autor: ")
     book.append(book_author)
+    book.append(es_prestado)
     books.update({id_book: book})
 
 
 def booking_books():
     lend_book=[]
+    
     id_book_loan = int(input("id prestamo: "))
     id_friend = int(input("Buscar amigo por id: "))
     friend = search_friend_by_id(id_friend)
     user = friend[0] 
-    lend_book.append(user) 
+    lend_book.append(user)
     id_book = int(input("Buscar libro por id: "))
     book = search_book_by_id(id_book)
-    book_name = book[0]
-    lend_book.append(book_name)
-    loan_date= input("dia/mes/año")
-    lend_book.append(loan_date)
-    return_date = input("dia/mes/año")
-    lend_book.append(return_date)
-    booking.update({id_book_loan: lend_book})
+    if book[2] == False:
+        change_status_book(id_book)
+        book_name = book[0]
+        lend_book.append(book_name)
+        loan_date= input("dia/mes/año")
+        lend_book.append(loan_date)
+        return_date = input("dia/mes/año")
+        lend_book.append(return_date)
+        
+        booking.update({id_book_loan: lend_book})
+    else:
+        print("El libro ya está prestado")
 
 
 def show_friend():
@@ -102,6 +119,12 @@ def search_friend_by_id(id_friend):
 def search_book_by_id(id_book):
     book = books.get(id_book)
     return book        
+
+def change_status_book(id_book):
+    book = books.get(id_book)
+    if book[2] == False:
+        book[2] = True
+    
 
 
 if __name__ == "__main__":
