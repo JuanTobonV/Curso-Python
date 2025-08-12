@@ -6,8 +6,17 @@ booking = {}
 
 def main():
     while(True):
+        print(f"Lista libros: {books}")
+        print("///////////")
+
+        print(f"Lista reservas: {booking}")
+
+
         print(menu())
         user_option = int(input("Escoje una opción: "))
+
+        
+
 
         match user_option:
             case 1:
@@ -57,11 +66,13 @@ def is_taken():
 
 def create_books():
     book = []
+    es_prestado = False
     id_book = int(input("Id libro: "))
     book_name = input("Nombre Libro: ")
     book.append(book_name)
     book_author = input("Autor: ")
     book.append(book_author)
+    book.append(es_prestado)
     books.update({id_book: book})
 
 
@@ -80,7 +91,9 @@ def booking_books():
     if not book:
         print("Libro no encontrado.")
         return
-    book_name = book[0]
+    if book[2] == False:
+        change_status_book(id_book)
+        book_name = book[0]
 
     found_loan_id = None
     for loan_id, loan in booking.items():
@@ -92,13 +105,16 @@ def booking_books():
         print("El libro ya estaba prestado. Se eliminará el préstamo anterior y estará disponible para prestar de nuevo.")
         del booking[found_loan_id]
 
-    lend_book.append(book_name)
-    loan_date = input("Día del prestamo: dia/mes/año: ")
-    lend_book.append(loan_date)
-    return_date = input("Día de entrega: dia/mes/año: ")
-    lend_book.append(return_date)
-    booking.update({id_book_loan: lend_book})
+        lend_book.append(book_name)
+        loan_date = input("Día del prestamo: dia/mes/año: ")
+        lend_book.append(loan_date)
+        return_date = input("Día de entrega: dia/mes/año: ")
+        lend_book.append(return_date)
+        
+        booking.update({id_book_loan: lend_book})
     print("Préstamo registrado correctamente.")
+    else:
+        print("El libro ya está prestado")
 
     
 def show_friend():
@@ -123,6 +139,12 @@ def search_friend_by_id(id_friend):
 def search_book_by_id(id_book):
     book = books.get(id_book)
     return book        
+
+def change_status_book(id_book):
+    book = books.get(id_book)
+    if book[2] == False:
+        book[2] = True
+    
 
 
 if __name__ == "__main__":
