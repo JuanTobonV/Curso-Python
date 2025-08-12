@@ -6,12 +6,6 @@ booking = {}
 
 def main():
     while(True):
-        print(f"Lista libros: {books}")
-        print("///////////")
-
-        print(f"Lista reservas: {booking}")
-
-
         print(menu())
         user_option = int(input("Escoje una opción: "))
 
@@ -20,7 +14,6 @@ def main():
 
         match user_option:
             case 1:
-                is_taken()
                 createFriend()
             case 2:
                 create_books()
@@ -61,8 +54,6 @@ def createFriend():
 
 
 
-def is_taken():
-    print(booking)
 
 def create_books():
     book = []
@@ -77,46 +68,36 @@ def create_books():
 
 
 def booking_books():
-    lend_book = []
+    lend_book=[]
+    
     id_book_loan = int(input("id prestamo: "))
     id_friend = int(input("Buscar amigo por id: "))
     friend = search_friend_by_id(id_friend)
     if not friend:
         print("Amigo no encontrado.")
         return
-    user = friend[0]
+    user = friend[0] 
     lend_book.append(user)
     id_book = int(input("Buscar libro por id: "))
     book = search_book_by_id(id_book)
     if not book:
         print("Libro no encontrado.")
         return
+    
     if book[2] == False:
         change_status_book(id_book)
         book_name = book[0]
-
-    found_loan_id = None
-    for loan_id, loan in booking.items():
-        if loan[1] == book_name:
-            found_loan_id = loan_id
-            break
-
-    if found_loan_id is not None:
-        print("El libro ya estaba prestado. Se eliminará el préstamo anterior y estará disponible para prestar de nuevo.")
-        del booking[found_loan_id]
-
         lend_book.append(book_name)
-        loan_date = input("Día del prestamo: dia/mes/año: ")
+        loan_date= input("Fecha de prestamo: dia/mes/año: ")
         lend_book.append(loan_date)
-        return_date = input("Día de entrega: dia/mes/año: ")
+        return_date = input("Fecha de entrega: dia/mes/año: ")
         lend_book.append(return_date)
         
         booking.update({id_book_loan: lend_book})
-    print("Préstamo registrado correctamente.")
     else:
         print("El libro ya está prestado")
 
-    
+
 def show_friend():
     for i,j in friends.items():
         print(i,j)
